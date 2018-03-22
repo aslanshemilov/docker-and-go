@@ -23,3 +23,15 @@ The main character of the Go language is: –
 • Concurrency: – Go language provides a concurrency primitive comparable to the actors model. These players models help in naming endpoints of the channels.
 
 • Static Binaries: – Go language has no static boundaries. It can be quickly compiled and launched immediately.
+
+What is a microservice? We use to separate codebases. 
+
+Complexity - Splitting features into microservices allows you to split code into smaller chunks. It harks back to the old unix adage of 'doing one thing well'. There's a tendency with monoliths to allow domains to become tightly coupled with one another, and concerns to become blurred. This leads to riskier, more complex updates, potentially more bugs and more difficult integrations.
+
+Scale - In a monolith, certain areas of code may be used more frequently than others. With a monolith, you can only scale the entire codebase. So if your auth service is hit constantly, you need to scale the entire codebase to cope with the load for just your auth service.
+
+First define your service, this should contain the methods that you wish to expose to other services. Then you define your message types, these are effectively your data structure. Protobuf is statically typed, and you can define custom types, as we have done with `Container`. Messages are themselves just custom types.
+
+There are two libraries at work here, messages are handled by protobuf, and the service we defined is handled by a gRPC protobuf plugin, which compiles code to interact with these types, i.e the `service` part of our proto file.
+
+
