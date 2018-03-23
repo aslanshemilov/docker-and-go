@@ -38,3 +38,29 @@ func main() {
 	}
 	fmt.Println(sum)
 }
+
+//If you omit the loop condition it loops forever, so an infinite loop is compactly expressed.
+
+func main() {
+	for {
+	}
+} //received output "process took too long"
+
+
+//Go's if statements are like its for loops; the expression need not be surrounded by parentheses () but the braces {} are required.
+
+import (
+	"fmt"
+	"math"
+)
+
+func sqrt(x float64) string {
+	if x < 0 {
+		return sqrt(-x) + "i"
+	}
+	return fmt.Sprint(math.Sqrt(x))
+}
+
+func main() {
+	fmt.Println(sqrt(2), sqrt(-4))
+}
