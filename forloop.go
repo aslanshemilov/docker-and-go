@@ -18,3 +18,23 @@ func main() {
 	}
 	fmt.Println(sum)
 }
+
+//The init and post statement are optional.
+
+func main() {
+	sum := 1 //initialization
+	for ; sum < 1000; {
+		sum += sum
+	}
+	fmt.Println(sum)
+}
+
+//At that point you can drop the semicolons: C's while is spelled for in Go
+
+func main() {
+	sum := 1 //initialization
+	for sum < 1000 {
+		sum += sum
+	}
+	fmt.Println(sum)
+}
