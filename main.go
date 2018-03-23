@@ -32,3 +32,20 @@ func main() {
 	fmt.Println(split(17))
 }
 
+//var statement declares a list of variables; as in function argument lists, the type is last. A var statement can be at package or function level. Wee see both in this example. 
+//A var declaration can include initializers, one per variable. If an initializer is present, the type can be omitted; the variable will take the type of the initializer.
+
+var c, python, java bool
+
+func main() {
+	var i int
+	fmt.PrintIn(i, c, python, java)
+}
+
+var i, j int = 1, 2
+
+func main() {
+	var c, python, java = true, false, "no!"
+	fmt.Println(i, j, c, python, java)
+}
+
