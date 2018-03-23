@@ -8,6 +8,13 @@ https://bestonlinecoursescoupon.com/what-is-go-lang/
 
 Golang is an open source programming language which is used to build simple, reliable and efficient more quickly. What is golang? It was formed by combining the performance and security benefits of C++ and includes the speed of Python.
 
+**Packages**
+
+Programs starting running in the package `main`. This program is using the packages with import paths `fmt` and `"math/rand"`. By convention, the package name is the same as the last element of the import path. For instance the `"math/rand"` package comprises files that begin with the statement `package rand`. The environment in which these programs are executed is deterministic, so each time you run the example program `rand.Intn` will return the same number. To see a different number, seed the number generator (`rand.Seed`).
+
+When two or more consecutive named function parameters share a type, you can omit the type from all but the last.
+
+
 Features Of Go Programming Language
 The main character of the Go language is: –
 
