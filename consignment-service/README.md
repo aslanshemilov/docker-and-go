@@ -1,4 +1,4 @@
-## Microservices: Introduction
+# Microservices: Introduction
 
 We are creating a microservice: a **shipping container management platform**. 
 
@@ -9,4 +9,10 @@ A microservice is the concept of taking that second approach slightly further, a
 
 Go is suited very well to work with microservices. It is lightweight, very fast and has great support for concurrency.
 
-## Introducing protobuf/gRPC
+# Introducing protobuf/gRPC
+
+Microservices are split into separate codebases, so we will have to deal with communication issues that could arise. In a monolith setting, communicaiton is not an issue because all the code you call is somewhere else in the codebase. Microservices do not have this ability, as they live in separate places. There needs to be a way for these independent services to talk to one another with little delay. Possible solutions to this would be to use traditional REST, like JSON or XML over http. However, we face to issue of service A having to encode its dta into JSON/XML, send a large string over the wire, to service B, which then has to decode this message from JSON, back into the code. We may face issues with scaling with this. Whilst you're forced to adopt this form of communication for web browsers, services can just communicate with each other in any format they wish. 
+
+**gRPC** is a lightweight binary based remote procedure call (RPC; one program can use to request a service from a program located  in another computer on a network without having to understand the network's details) communication protocol by Google. gRPC uses binary as its core data format. With JSON, we would see a string of http being sent over, which can contain bulky metadata about its encoding format (about its length, content format and various other information). This is so the server can inform a traditionally browser based client what to expect. We do not require this while when we are communicating between two services. Binary will suffice and is more lightweight. gRPC uses HTTP 2.0 spec, which allows for the use of binary data. It allows for bi-directional streaming. HTTP 2 makes applications more faster, simpler and robust. Its primary goal is to reduce the delay by enabling full request and response multiplexing, minimize protocol overhead through efficient compression of HTTP header fields, and add support for rquest prioritization and server push. 
+
+gRPC has an interchange digital subscriber line (DSL) called **protobuf**, which allows you to define an interface to your service using a developer friendly format. 
