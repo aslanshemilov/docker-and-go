@@ -1,4 +1,4 @@
-##Microservices: Introduction
+## Microservices: Introduction
 
 We are creating a microservice: a **shipping container management platform**. 
 
@@ -9,4 +9,4 @@ A microservice is the concept of taking that second approach slightly further, a
 
 Go is suited very well to work with microservices. It is lightweight, very fast and has great support for concurrency.
 
-##Introducing protobuf/gRPC
+## Introducing protobuf/gRPC
