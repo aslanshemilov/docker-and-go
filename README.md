@@ -16,7 +16,7 @@ Set up Go Workspace:
 
 `$ vi .bashrc`
 
-# This is actually your .bashrc file
+(This is actually your .bashrc file)
 
 `export GOPATH=$HOME/go-workspace` # don't forget to change your path correctly!
 
