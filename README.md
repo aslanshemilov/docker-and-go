@@ -1,35 +1,193 @@
-# golang
+# Docker Reference
 
-https://www.golang-book.com/public/pdf/gobook.0.pdf
+**Virtualization vs. Containerization**
 
-https://ewanvalentine.io/microservices-in-golang-part-1/
+- *Virtualization*: importing a guest operating system on top of a host operating system. Initially, this allowed us to run multiple applications on the same machine. Nonetheless, there are pros and cons.
 
-https://grpc.io/docs/quickstart/go.html
+  - Advantages: 
+  
+    1. Multiple operating systems in same machine.
+    2. Easy maintainence and recovery.
+    3. Lower total cost of ownership.
+    
+  - Disadvantages: 
+  
+    1. Multiple virtual machines lead to unstable performance.
+    2. Hypervisors are not as efficient as host operating systems.
+    3. Long boot-up process (approximately 1 minute).
 
-https://bestonlinecoursescoupon.com/what-is-go-lang/
+- *Containerization*: bringing virtualization to the operating system; more efficient because there is no guessed OS.
 
-Set up Go Workspace: 
+  - Advantages over virtualization:
+    1. Containers on same OS kernel are lighter and smaller.
+    2. Better resource utilization compared to VMs.
+    3. Short Boot-up process (1/20th of a second). 
+    
+**What is Docker?**
 
-`$ brew update`
+Docker is a containerization platform which packages your application and all its dependencies together in the form of containers so as to ensure that your application works seamlessly in any environment be it development or test or production. It ensures that there is process level isolation, which ensures developers that they can build applications that will not interfere with one another. This helps because the operations team does not need to install all components and the working environment is consistent among all individuals. The code can be deployed effortlessly.
 
-`$ brew install golang`
+*Resources/Memory Utilization*
 
-`$ vi .bashrc`
+- In the case of virtual machines, let us say we have a total of 16 GB of RAM, and we use only 9 GB. We waste 7 GB. This 7 GB of memory is bloacked and cannot be allotted a new VM. This is a major issue because RAM is very costly. Docker can help alleviate this issue -- through the use of Docker, only 9 GB is used, and the 7 GB will be alloted to a new container. We can create additional containers with the leftover RAM. 
 
-(This is actually your .bashrc file)
+*Building & Deployment*
 
-`export GOPATH=$HOME/go-workspace` # don't forget to change your path correctly!
+Virtual Machines
 
-`export GOROOT=/usr/local/opt/go/libexec`
+- New Builds --> Multiple OS --> Separate Libraries --> Heavy --> More Time
 
-`export PATH=$PATH:$GOPATH/bin`
+Docker
 
-`export PATH=$PATH:$GOROOT/bin`
+- New Builds --> Same OS --> Separate Libraries --> Lightweight --> Less Time
 
-`$ mkdir -p $GOPATH $GOPATH/src $GOPATH/pkg $GOPATH/bin`
+*Integration*
 
-`$GOPATH/src` : Where your Go projects / programs are located
+Integration in VMs is possible, but: 
 
-`$GOPATH/pkg` : contains every package objects
+- Costly due to infrastructure requirements
+- Not easily scalable
 
-`$GOPATH/bin` : The compiled binaries home
+Integration in Docker is faster, cheaper and easily scalable. 
+
+**How does Docker work?** 
+
+- How does the communication happen between Docker client and the Docker Daemon? We use a combination of Rest API, Socket.IO and TCP. 
+Even though Rest API is the primary mode for communication, the Docker Daemon can listen for Remote API requests via three different types of Socket: Unix, TCP and FD. 
+
+*Docker Images & Containers*
+
+Images: 
+
+- Read only template used to create containers.
+
+- Built by Docker users. 
+
+- Stored in Docker Hub or your local registry.
+
+Containers: 
+
+- Isolated application platform.
+
+- Contains everything need to run the application.
+
+- Built from one or more images.
+
+*Docker Registry*
+
+- Docker registry is a storage component for Docker images.
+
+- We can store the images in either public/private repositories (such as Docker Hub).
+
+- Control where your images are being stored.
+
+- Integrate image storeage with your in-house development workflow.
+
+*Docker Architecture*
+
+Client (command to build, pull or run) --> Docker_Host (Docker Daemon, has containers and images) --> Registry (stores images)
+
+For example, issue command such as `docker build` --> Docker Daemon will build images based on the command, and put them in the specified registry. 
+
+`docker pull` --> pull an image from the registry that another user has made; you can run this image as well. 
+
+`docker run` --> create container.
+
+Remember that you first build an image to have a container. You cannot directly create a Docker container without a Docker image.
+
+**Basic Commands**
+
+- To pull a Docker image from the Docker hub, we can use `$ docker pull <image-name:tag>`
+
+- To run that image, we can use ` docker run <image-name:tag>` or `$ docker run<image-id>`
+
+- To list down all the images in our system, use ` $ docker images `
+
+- To list down all the containers (even if they are not running), we can use ` $ docker ps -a`
+
+**Building your own Docker Images**
+
+- Images are comprised of multiple layers
+
+- Each layer in an image is an image of its own
+
+- They comprise of a base image layer which is read-only
+
+- Any changes made to an image are saved as layers on top of the base image layer
+
+- Containers are generated by running the image layers which are stacked one above the other
+
+**Creating a Dockerfile**
+
+`docker --version`
+
+`docker info` or `docker version`
+
+*Test Docker installation with Hello World*
+
+`docker run hello-world` --> You should receive this message on the terminal:
+
+`Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (amd64)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://cloud.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/engine/userguide/ `
+ 
+List the Docker image: `docker image ls`
+
+List the hello-world container: `docker container ls --all`
+
+Quiet mode: `docker container ls -aq`
+
+Define container with `Dockerfile`
+
+*Dockerfile*: contains instructions for building a Docker image; instructions contain various keywords.
+
+- `FROM`: indicates base image from which the container is built
+
+- `RUN`: indicates the command that needs to be executed on the image
+
+Command to `build` an image: `$ docker build -t [image_name]: tag` 
+
+Command to `run` the newly built image: `$ docker run -name "container-name" -p <host port>:<container port><image_name:tag>`
+
+I also used NextCloud to help me learn more about Docker and a real world application of it. The repository I used can be found at https://github.com/nextcloud/docker
+
+### `docker-compose.yml`
+
+We tell our Docker instance to find the Dockerfile in ./api, build it and configure some of our runtime settings. Such as mounting our project as a volume, so the container has access to the files. Exposing the port that our app's running on and linking our database container to our application container. We are also calling in the default MongoDB container. 
+
+### `server.go`
+
+Start the http server, configure our routes and assign the correct controller etc to each route. We call the main function, which acts as an entrypoint to your applicaiton. Within that function, we're calling `martini.Classic()` which is our base web framework library. Martini gives us middlewares and routing, etc. We then set the instance of a controller, and pass its methods to two routes. Finally, we run `m.Run()` which starts our server.
+
+We then call our MongoDB connection string (`project_database_1` in alias of our database Docker container). Then we call our database name from the environment variable we have se twithin our `docker-compose.yml`. Finally, we return an instance of the MongoDB connection.
+
+**References**
+
+Docker for Mac: https://docs.docker.com/docker-for-mac/
+
+What is a container?: https://www.sdxcentral.com/cloud/containers/definitions/what-is-docker-container-open-source-project/
+
+Good introduction: https://www.youtube.com/watch?v=h0NCZbHjIpY
+
+Useful cheat sheet: https://docs.docker.com/get-started/#recap-and-cheat-sheet
+
+Creating Dockerfile: https://docs.docker.com/get-started/part2/#dockerfile
+
+Compose yml: https://docs.docker.com/get-started/part3/#docker-composeyml
